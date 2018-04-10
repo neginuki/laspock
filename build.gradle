@@ -1,0 +1,66 @@
+repositories {
+    jcenter()
+    mavenCentral()
+    mavenLocal()
+}
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+task wrapper(type: Wrapper) { gradleVersion = buildGradleVersion }
+
+tasks.withType(AbstractCompile) {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+    options.encoding = 'UTF-8'
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+            artifact sourcesJar
+        }
+    }
+    repositories {
+        maven {
+             url 'file:./repo'
+        }
+    }
+}
+
+task sourcesJar(type: Jar, dependsOn:classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn:javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+javadoc {
+    options.charSet = 'UTF-8'
+    options.encoding = 'UTF-8'
+}
+
+artifacts {
+    archives sourcesJar
+}
+
+dependencies {
+    compile "org.dbflute.utflute:utflute-lastaflute:${utfluteVersion}"
+    compile "org.codehaus.groovy:groovy-all:${groovyVersion}"
+    compile "org.spockframework:spock-core:${spockVersion}"
+
+    compile "org.dbflute:dbflute-runtime:${dbfluteVersion}"
+    compile "org.lastaflute:lastaflute:${lastaVersion}"
+
+    compile "javax.transaction:javax.transaction-api:${javaxTransactionVersion}"
+    compile "org.slf4j:slf4j-api:${slf4jVersion}"
+    runtime "ch.qos.logback:logback-classic:${logbackVersion}"
+
+    compile "javax.servlet:javax.servlet-api:${javaxServletVersion}"
+}
