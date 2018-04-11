@@ -1,3 +1,15 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'http://kamatama41.github.com/maven-repository/repository' }
+    }
+    dependencies {
+        classpath("com.github.kamatama41:gradle-git-release-plugin:+")
+    }
+}
+
+apply plugin: "com.github.kamatama41.git-release"
+
 repositories {
     jcenter()
     mavenCentral()
@@ -63,4 +75,10 @@ dependencies {
     runtime "ch.qos.logback:logback-classic:${logbackVersion}"
 
     compile "javax.servlet:javax.servlet-api:${javaxServletVersion}"
+}
+
+gitRelease {
+    groupId = group
+    artifactId = "laspock"
+    repoUri = "git@github.com:neginuki/laspock.git"
 }
