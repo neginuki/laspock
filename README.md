@@ -3,7 +3,16 @@ Laspock
 
 Lastaflute のテストケースを Spock で書けるように支援します。
 
-## build.gradle
+## 機能
+
+- フィーチャメソッド単位のトランザクション
+- @Resource を指定したフィールドのDI
+- 自分で new したクラスのDI
+
+
+## 設定
+
+**build.gradle**
 ```
 apply plugin: 'groovy'
 
