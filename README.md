@@ -5,10 +5,29 @@ Lastaflute のテストケースを Spock で書けるように支援します�
 
 ## 機能
 
-- フィーチャメソッド単位のトランザクション
 - @Resource を指定したフィールドのDI
 - 自分で new したクラスのDI
+- フィーチャメソッド単位のトランザクション
 
+```groovy
+@Laspock
+class ExampleSpec extends Specification {
+
+    @Resource
+    MemberBhv memberBhv
+
+    def "@Resource を指定したフィールドのDI"() {
+        when:
+            def name = memberBhv.selectEntityWithDeletedCheck {
+                it.specify().columnMemberName()
+                it.acceptPK(1)
+            }.getMemberName()
+
+        then:
+            name == 'システム管理者'
+    }
+}
+```
 
 ## 設定
 
