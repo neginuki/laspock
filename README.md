@@ -26,6 +26,21 @@ class ExampleSpec extends Specification {
         then:
             name == 'システム管理者'
     }
+    
+    def "自分で new したクラスのDI"() {
+        given:
+            def tim = new TestInjectManager()
+            def bhv = tim.di new MemberBhv()
+
+        when:
+            def name = bhv.selectEntityWithDeletedCheck {
+                it.specify().columnMemberName()
+                it.acceptPK(1)
+            }.getMemberName()
+
+        then:
+            name == 'システム管理者'
+    }
 }
 ```
 
