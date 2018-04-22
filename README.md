@@ -44,7 +44,7 @@ class ExampleSpec extends Specification {
 
     def "フィーチャメソッド単位のトランザクション"() {
         given:
-            int maxId = memberBhv.selectScalar(Integer.class).max { it.specify().columnMemberId()}.orElse(0)
+            int maxId = memberBhv.selectScalar(Integer.class).max { it.specify().columnMemberId() }.orElse(0)
 
             def member = new Member()
             member.with {
