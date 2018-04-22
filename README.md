@@ -26,7 +26,7 @@ class ExampleSpec extends Specification {
         then:
             name == 'システム管理者'
     }
-    
+
     def "自分で new したクラスのDI"() {
         given:
             def tim = new TestInjectManager()
@@ -40,6 +40,26 @@ class ExampleSpec extends Specification {
 
         then:
             name == 'システム管理者'
+    }
+
+    def "フィーチャメソッド単位のトランザクション"() {
+        given:
+            int maxId = memberBhv.selectScalar(Integer.class).max { it.specify().columnMemberId()}.orElse(0)
+
+            def member = new Member()
+            member.with {
+                memberName = 'newMember'
+                email = 'email@emai.com'
+                password = 'pass123'
+                statusCode = 'OK'
+                displayOrder = 1
+            }
+
+        when:
+            memberBhv.insert member
+
+        then:
+            member.memberId > maxId
     }
 }
 ```
