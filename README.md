@@ -67,7 +67,7 @@ class ExampleSpec extends Specification {
 ## 設定
 
 **build.gradle**
-```
+```gradle
 apply plugin: 'groovy'
 
 repositories {
@@ -79,4 +79,35 @@ dependencies {
     // ...
     testCompile "world.sake:laspock:0.0.15"
 }
+```
+
+**pom.xml**
+```xml
+<properties>
+    <laspock.version>0.0.14</laspock.version>
+</properties>
+
+<repositories>
+    <repository>
+        <id>laspock</id>
+        <url>https://neginuki.github.io/laspock</url>
+    </repository>
+</repositories>
+
+<dependencyManagement>
+        <dependency>
+            <groupId>world.sake</groupId>
+            <artifactId>laspock</artifactId>
+            <version>${laspock.version}</version>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
+<dependencies>
+    <dependency>
+        <groupId>world.sake</groupId>
+        <artifactId>laspock</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
 ```
