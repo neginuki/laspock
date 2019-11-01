@@ -77,7 +77,7 @@ repositories {
 
 dependencies {
     // ...
-    testCompile "world.sake:laspock:0.0.15"
+    testCompile "world.sake:laspock:0.0.14"
 }
 ```
 
