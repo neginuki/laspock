@@ -13,6 +13,7 @@ import org.dbflute.utflute.core.binding.ComponentBinder;
 import org.dbflute.utflute.core.binding.ComponentProvider;
 import org.dbflute.util.Srl;
 import org.lastaflute.core.util.ContainerUtil;
+import org.lastaflute.di.core.factory.SingletonLaContainerFactory;
 import org.lastaflute.di.core.smart.SmartDeployMode;
 import org.lastaflute.di.naming.NamingConvention;
 import org.slf4j.Logger;
@@ -61,8 +62,11 @@ public class UTFluteInterceptor extends AbstractMethodInterceptor {
     public void interceptSetupMethod(IMethodInvocation invocation) throws Throwable {
         SmartDeployMode.setValue(SmartDeployMode.WARM);
 
-        prepareTestCaseContainer(); // コンテナを初期化
+        if (SingletonLaContainerFactory.hasContainer()) { // 異なるフレームワークのテストケースが混同したとき、既に存在する可能性がある e.g. UTFlute x Laspock のテストが混同しているプロジェクトをまとめて実行した場合
+            TestContainerUtil.destroyContainer(); // コンテナの破棄
+        }
 
+        prepareTestCaseContainer(); // コンテナを初期化
         prepareAccessContext(); // AccessContext を初期化
 
         testCaseBoundResult = testCaseComponentBinder.bindComponent(invocation.getInstance()); // バインド
