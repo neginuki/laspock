@@ -77,14 +77,14 @@ repositories {
 
 dependencies {
     // ...
-    testCompile "world.sake:laspock:0.0.14"
+    testCompile "world.sake:laspock:0.0.15"
 }
 ```
 
 **pom.xml**
 ```xml
 <properties>
-    <laspock.version>0.0.14</laspock.version>
+    <laspock.version>0.0.15</laspock.version>
 </properties>
 
 <repositories>
